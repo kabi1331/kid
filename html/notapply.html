@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/jquery3.5.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        #div_footer {
+            position: fixed;
+            display: flex;
+            font-size: 20px;
+            width: 100%;
+            height: 50px;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            bottom: 0;
+        }
+
+        #div_footer div:first-child {
+            width: 30%;
+            background-color: #159BD5;
+        }
+
+        #div_footer div:nth-child(2) {
+            width: 70%;
+            background-color: #11A265;
+        }
+
+        .greey {
+            background-color: #E3E3E3;
+            height: 15px;
+        }
+
+        .s {
+            display: block;
+            width: 8px;
+            height: 26px;
+            background-color: #0099FF;
+        }
+
+        .div>div:nth-child(1) {
+            display: flex;
+        }
+
+        .div>div:nth-child(2) {
+            display: flex;
+            flex-direction: column;
+            font-size: 16px
+        }
+
+        .div label::before {
+            content: '*';
+            color: #AF0F0E;
+            font-size: 15px;
+        }
+
+        .div * {
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .i {
+            border-radius: 10px;
+            height: 20px;
+            width: 60%;
+        }
+
+        .div>div:nth-child(2) div {
+            margin-left: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div_footer">
+        <div onclick="back1()">
+            返回
+        </div>
+        <div onclick="submit1()">
+            确 定 预 约
+        </div>
+    </div>
+    <form>
+        <div>
+            <div class="div">
+                <div>
+                    <span class="s"></span>
+                    <h3>地址<font color="#AF0F0E">(*为必填写)</font>
+                    </h3>
+                </div>
+                <div>
+                    <div>
+                        <label for="">家庭地址</label><input type="text" name="address" id="" class="i">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="greey"></div>
+        <div class="div">
+            <div>
+                <span class="s"></span>
+                <h3>小朋友信息<font color="#AF0F0E">(*为必填写)</font>
+                </h3>
+            </div>
+            <div>
+                <div>
+                    <label for="">姓名</label><input type="text" name="studentName" id="" class="i" placeholder="只能由中文或英文组成" onchange="checkName(this)">
+                </div>
+                <div>
+                    <label for="">年龄</label><input type="text" name="age" id="" class="i" onchange="checkAge(this)">
+                </div>
+                <div>
+                    <label for="">性别</label>男<input type="radio" name="sex" id="" value="1">女<input type="radio"
+                        name="sex" id="" value="0">
+                </div>
+                <div>
+                    <label for="">预约班级</label>
+                    <select name="classId" id="se">
+                        <option value="1">小班</option>
+                        <option value="2">中班</option>
+                        <option value="3">大班</option>
+                    </select>
+                    <input type="button" value="费用清单" onclick="changePage(this)">
+                </div>
+            </div>
+        </div>
+        <div class="greey"></div>
+        <div class="div">
+            <div>
+                <span class="s"></span>
+                <h3>联系方式<font color="#AF0F0E">(*为必填写)</font>
+                </h3>
+            </div>
+            <div>
+                <div>
+                    <label for="">联系电话</label><input type="text" name="telphone" id="" class="i" placeholder="联系方式" onchange='checkTel(this)'>
+                </div>
+                <div>
+                    <label for="">微信号</label><input type="text" name="vxNum" id="" class="i" onchange="checkvxNum(this)">
+                </div>
+            </div>
+        </div>
+        <div class="greey"></div>
+        <div class="div">
+            <div>
+                <span class="s"></span>
+                <h3>父亲信息</h3>
+            </div>
+            <div>
+                <div>
+                    <span>姓名</span><input type="text" name="fatherName" id="" class="i">
+                </div>
+                <div>
+                    <span>身份证号</span><input type="text" name="fatherIdcard" id="" class="i">
+                </div>
+            </div>
+        </div>
+        <div class="greey"></div>
+        <div>
+            <input type="text" name="appointmentId" id="hi">
+        </div>
+        <div class="div" style="margin-bottom: 50px;">
+            <div>
+                <span class="s"></span>
+                <h3>母亲信息</h3>
+            </div>
+            <div>
+                <div>
+                    <span>姓名</span><input type="text" name="motherName" id="" class="i">
+                </div>
+                <div>
+                    <span>身份证号</span><input type="text" name="motherIdcard" id="" class="i">
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        const ip = 'http://192.168.0.118/kindergarten_wechat_war'
+
+        function dat() {
+            var date_ = new Date();
+            var year = date_.getFullYear();
+            var month = date_.getMonth() + 1;
+            var day = date_.getDate();
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+            var hours = date_.getHours();
+            var mins = date_.getMinutes();
+            var secs = date_.getSeconds();
+            var msecs = date_.getMilliseconds();
+            if (hours < 10) hours = "0" + hours;
+            if (mins < 10) mins = "0" + mins;
+            if (secs < 10) secs = "0" + secs;
+            if (msecs < 10) secs = "0" + msecs;
+            let id1 = year + month + day + hours + mins + secs;
+            let randomNum = Math.random() * 9000
+            randomNum += 1000
+            let id2 = parseInt(randomNum)
+            $('#hi').attr('value', id1 + id2)
+            $('#hi').hide()
+        }
+        dat();
+
+        function back1() {
+            window.location.href = './homepage.html'
+        }
+
+        function submit1() {
+            let serializeObj = {};
+            let array = $('form').serializeArray();
+            let str = $('form').serialize();
+            $(array).each(function () {
+                if (serializeObj[this.name]) {
+                    if ($.isArray(serializeObj[this.name])) {
+                        serializeObj[this.name].push(this.value);
+                    } else {
+                        serializeObj[this.name] = [serializeObj[this.name], this.value];
+                    }
+                } else {
+                    serializeObj[this.name] = this.value;
+                }
+            });
+            console.log(serializeObj);
+                $.ajax({
+                    url: ip + '/appointment/wechat/insert',
+                    type: 'POST',
+                    contentType: 'application/json; charset=UTF-8',
+                    async: false,
+                    dataType: 'json',
+                    data: JSON.stringify(serializeObj),
+                    success: function (response) {
+                        if(response == 1){
+                            window.location.href = './pay.html';
+                        }
+                    }
+                })
+        }
+
+        function changePage() {
+            console.log($('#se option:selected').val());
+            localStorage.clear();
+            localStorage.setItem('classId',$('#se option:selected').val())
+            window.location.href = './money.html'
+        }
+
+        function checkMessage(flag,obj) {
+            if (flag) {
+                obj.style.borderColor = 'green'
+            }else{
+                obj.style.borderColor = 'red'
+            }
+        }
+
+        function checkName(obj) {
+            checkMessage(/[·a-zA-Z ]{1,32}/.test(obj.value)||/[\u4e00-\u9fa5]{2,32}/.test(obj.value),obj)
+        }
+
+        function checkAge(obj) {
+            checkMessage(/[0-9]|[1-9][0-9]/.test(obj.value),obj)
+        }
+
+        function checkTel(obj) {
+            checkMessage(/[0-9]{4}-[0-9]{8}|[1][0-9]{10}/.test(obj.value),obj)
+        }
+
+        function checkvxNum(obj) {
+            checkMessage(/[a-zA-Z0-9-_]{6,20}/.test(obj.value),obj)
+        }
+    </script>
+</body>
+
+</html>

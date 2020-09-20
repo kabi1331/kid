@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/jquery3.5.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+        .greey {
+            background-color: #E3E3E3;
+            height: 10px;
+        }
+        header{
+            display:flex;
+            justify-content: center;
+            margin:10px 0
+        }
+        .baseCost{
+            color:#AF4110
+        }
+        .list div{
+            display:flex;
+            justify-content:space-around;
+            margin:15px 0
+        }
+        .list p {
+            display:block;
+            margin-left: 20px;
+            margin-bottom: 50px;
+        }
+        #div_footer {
+            position: fixed;
+            font-size: 20px;
+            width: 100%;
+            height: 50px;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            bottom: 0;
+            background-color: #159BD5;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2 id="classId"></h2>
+    </header>
+    <div class="greey"></div>
+    <div class="list">
+        <div>
+            <h3 class="costName"></h3>
+            <div style="width:30%"></div>
+            <h3 class="baseCost"></h3>
+        </div>
+        <p class="description"></p>
+    </div>
+    <div class="greey"></div>
+    <div class="list">
+        <div>
+            <h3 class="costName"></h3>
+            <div style="width:30%"></div>
+            <h3 class="baseCost"></h3>
+        </div>
+        <p class="description"></p>
+    </div>
+    <div class="greey"></div>
+    <div class="list">
+        <div>
+            <h3 class="costName"></h3>
+            <div style="width:30%"></div>
+            <h3 class="baseCost"></h3>
+        </div>
+        <p class="description"></p>
+    </div>
+    <div class="greey"></div>
+    <h2 id="all" style="margin-top: 10px;margin-left: 200px;"></h2>
+    <div id="div_footer" onclick="back()">
+        返回报名
+    </div>
+    <script>
+        const list = [
+        {
+            "costId":1,
+            "costName":"学费",
+            "baseCost":102.21,
+            "description":"这真的只是学费", 
+            "classId":1
+        },
+        {
+            "costId":2, 
+            "costName":"杂物费",
+            "baseCost":32.21, 
+            "description":"这真的只是杂物费", 
+            "classId":1
+        },
+        {
+            "costId":3, 
+            "costName":"书本费",
+            "baseCost":101.11, 
+            "description":"这真的只是书本费", 
+            "classId":1
+        },
+        ]
+        // const ip = 'http://192.168.0.118/kindergarten_wechat_war/'
+        // $.get(ip + '/cost/wechat/select',JSON.stringify({classId:localStorage.getItem('classId')}),function(data){
+        //     console.log(data);
+        // })
+        if(list[0].classId == 1){
+            $('#classId').html('小班学费信息')
+        }else if(list[0].classId == 2){
+            $('#classId').html('中班学费信息')
+        }else{
+            $('#classId').html('大班学费信息')
+        }
+        let sum = 0
+        for(let i = 0; i < list.length; i++){
+            $('.baseCost').eq(i).html('¥' + list[i].baseCost)
+            $('.description').eq(i).html('说明文字:' + list[i].description)
+            $('.costName').eq(i).html(list[i].costName)
+            sum+=list[i].baseCost
+        }
+        $('#all').html('总计¥'+ sum.toFixed(2) +'元')
+        back = () => {
+            history.back()
+        }
+    </script>
+</body>
+</html>

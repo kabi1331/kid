@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap 101 Template</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery3.5.js"></script>
+  <style>
+    .glyphicon-refresh {
+      font-size: 25px;
+      color: rgb(29, 208, 194);
+    }
+
+    .line {
+      color: rgb(0, 235, 234);
+      font-size: 25px;
+      margin-left: 20px;
+      font-weight: 800;
+    }
+
+    .tittle {
+      height: 60px;
+      background-color: rgb(242, 242, 242);
+      border-radius: 5px;
+      line-height: 60px;
+      box-shadow: 5px 0px 5px gainsboro;
+    }
+
+    .tip {
+      margin-left: 10px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .search {
+      height: 70px;
+      border: .5px solid gainsboro;
+      margin-top: 20px;
+      border-radius: 5px;
+      line-height: 70px;
+      box-shadow: 5px 0px 5px gainsboro;
+    }
+
+    .saerchName {
+      width: 400px;
+      height: 40px
+    }
+
+    .btns {
+      background-color: rgb(0, 194, 157);
+      color: white;
+      height: 40px;
+      width: 95px;
+      margin-left: 30px;
+    }
+
+    .content {
+      border: .5px solid gainsboro;
+      margin-top: 20px;
+      border-radius: 5px;
+      line-height: 70px;
+      box-shadow: 2px -2px 5px gainsboro;
+      height: 640px;
+      font-weight: 600;
+    }
+
+    /* .table {
+      height: 560px;
+    } */
+
+    #classice {
+      height: 40px;
+    }
+
+    tr {
+      height: 70px;
+    }
+
+    tr th,
+    td {
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .num {
+      float: left;
+      margin-left: 30%;
+      margin-right: 30px;
+    }
+
+    .action {
+      width: 150px;
+      text-align: center;
+    }
+
+    .action span {
+      font-size: 18px;
+      margin-left: 20px;
+    }
+
+    .imgs {
+      width: 220px;
+      text-align: left;
+    }
+
+    .imgs img {
+      width: 70px;
+      height: 70px;
+      margin-left: 10px;
+      margin-right: 20px;
+    }
+
+    .intruduction {
+      width: 400px;
+    }
+
+    ul li {
+      list-style: none;
+      font-size: 14px;
+      color: rgb(161, 161, 161);
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    li input {
+      width: 700px;
+      height: 30px;
+    }
+
+    #showEdit {
+      display: none;
+      height: 600px;
+      margin-top: 30px;
+      border-radius: 5px;
+      border: .5px solid gainsboro;
+      box-shadow: 3px 0px 3px gainsboro;
+    }
+
+    #mustWrite {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <!--  -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 tittle">
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+        <span class="line">|</span>
+        <span class="tip">老师信息设置</span>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1 search" id="search">
+        <input class="saerchName" placeholder="输入搜索信息" id="saerchId">
+        <button type="button" id="searchTeacher" class="btn btn-default btns" aria-label="Left Align">
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+          搜索
+        </button>
+        <button type="button" id="addTeacher" class="btn btn-default btns" aria-label="Left Align">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          添加
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1 content" id="content">
+        <!--  -->
+        <table class="table table-hover" id="tab">
+          <tr id="classice">
+            <th>老师名称</th>
+            <th>职称名称</th>
+            <th>点赞数</th>
+            <th>介绍</th>
+            <th>操作</th>
+          </tr>
+        </table>
+        <div class="pages">
+          <span class="num">共<span id="total"></span>条</span>
+          <nav aria-label="Page navigation">
+            <ul class="pagination" id="pagination">
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="col-md-10 col-md-offset-1" id="showEdit">
+        <ul>
+          <li>
+            <span id="mustWrite">*</span>
+            老师名称：<input type="text" id="teacherName">0/24
+          </li>
+          <li>
+            <span id="mustWrite">*</span>
+            老师职称：<input type="text" id="job">0/24
+          </li>
+          <li>
+            <span id="mustWrite">*</span>
+            老师照片：
+            <input type="file" id="uploadImg">
+          </li>
+          <li>
+            <span id="mustWrite">*</span>
+            老师介绍：<textarea rows="6" cols="85" id="introduction"></textarea>0/100
+          </li>
+          <li>
+            <input type="button" value="确定编辑" class="btn btn-default" style="width: 130px;" onclick="changed()">
+            <input type="button" value="取消编辑" class="btn btn-default" style="width: 130px;" onclick="cancel()">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var teacher = []//展示在页面上的数据
+    var deteleId//删除的ID
+    var total = 0//数据的总数量
+    var ip = "http://192.168.0.111/kindergarten_wechat_war_exploded/"
+    window.onload = getTeacher()
+    function getTeacher() {
+      teacher = []
+      $.get(ip + 'teacher/manager/select', function (data) {
+        console.log(data);
+        teacher = data.list
+        total = data.length
+        var page = total / 10
+        page = Math.ceil(page)
+        $("#pagination").append(`<li><a href='#' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>`)
+        for (let i = 1; i <= page; i++) {
+          $("#pagination").append(`<li><a href="#">${i}</a></li>`)
+        }
+        $("#pagination").append(`<li><a href='#' aria-label='next'><span aria-hidden='true'>&laquo;</span></a></li>`)
+        getDataPage()
+      })
+    }
+
+    function getDataPage() {
+      $("#total").html(total)
+      for (let i = 0; i < teacher.length; i++) {
+        $("#tab").append(`<tr><td class='imgs'><img src='' id='a${i}'>${teacher[i].teacherName}</td><td>${teacher[i].job}</td><td>${teacher[i].likeNum}</td><td class='intruduction'>${teacher[i].introduction}</td><td class='action'><span class='glyphicon glyphicon-edit' onclick='edit(this)'></span><span class='glyphicon glyphicon-remove-circle' onclick='deleteTeacher(this)'></span></td></td></tr>`)
+        $(`#a${i}`).attr('src', ip + teacher[i].imgSrc)
+      }
+    }
+    //添加
+    $("#addTeacher").on("click", function () {
+      window.location.href = 'EditTeacherInfor.html'
+    })
+
+    //删除
+    function deleteTeacher(obj) {
+      var teachername = $(obj).parent().parent().children(":first").html().split(">")[1]
+      teacher.map((item, i) => {
+        if (item.teacherName == teachername) {
+          deteleId = item.teacherId
+        }
+      })
+      $.get(ip + "teacher/manager/delete?teacherId=" + deteleId, function (data) {
+        if (data == 1) {
+          console.log("删除成功");
+          $(obj).parent().parent().remove();
+          total--
+        }
+      })
+    }
+
+    //搜索
+    $("#searchTeacher").on("click", function () {
+      let teacherId = $("#saerchId").val()
+      console.log(teacherId);
+      $.get(ip + "teacher/manager/select?teacherName=" + teacherId, function (data) {
+        if (data == '') {
+          alert('不存在')
+        } else {
+          console.log(data);
+          $("#tab tr:not(:first)").empty()
+          teacher = []
+          teacher = data.list
+          total = teacher.length
+          getDataPage()
+        }
+      })
+
+    })
+
+    //编辑
+    var editInfor;
+    function edit(obj) {
+      var teachername = $(obj).parent().parent().children(":first").html().split(">")[1]
+      teacher.map((item, i) => {
+        if (item.teacherName == teachername) {
+          editInfor = item
+          console.log(editInfor);
+          $("#content").hide()
+          $("#search").hide()
+          $("#showEdit").show()
+          $("#teacherName").val(item.teacherName)
+          $("#job").val(item.job)
+          $("#introduction").val(item.introduction)
+        }
+      })
+    }
+
+    function changed() {
+      var teacherName = $("#teacherName").val()
+      var job = $("#job").val()
+      var introduction = $("#introduction").val()
+      console.log(teacherName, job, introduction);
+      var files = $("#uploadImg")[0].files[0];
+      console.log(files);
+      var formData = new FormData();
+      formData.append('teacherName', teacherName);
+      formData.append('job', job);
+      formData.append('introduction', introduction);
+      formData.append('file', files);
+      $.ajax({
+        url: ip + 'teacher/manager/update',
+        type: 'POST',
+        cache: false,
+        data: formData,
+        processData: false,
+        contentType: false,
+        mimeType: "multipart/form-data"
+      }).done(function (res) {
+        console.log(res);
+      }).fail(function (res) {
+        console.log(res);
+      });
+      return false;
+    }
+
+    //取消编辑
+    function cancel() {
+      $("#content").show()
+      $("#search").show()
+      $("#showEdit").hide()
+    }
+  </script>
+</body>
+
+</html>

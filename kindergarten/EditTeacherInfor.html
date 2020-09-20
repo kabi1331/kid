@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery3.5.js"></script>
+
+
+
+  <style>
+    .glyphicon-refresh {
+      font-size: 25px;
+      color: rgb(29, 208, 194);
+    }
+
+    .line {
+      color: rgb(0, 235, 234);
+      font-size: 25px;
+      margin-left: 20px;
+      font-weight: 800;
+    }
+
+    .tittle {
+      height: 60px;
+      background-color: rgb(242, 242, 242);
+      border-radius: 5px;
+      line-height: 60px;
+      box-shadow: 5px 0px 5px gainsboro;
+    }
+
+    .tip {
+      margin-left: 10px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .col-md-10 {
+      height: 600px;
+      margin-top: 30px;
+      border-radius: 5px;
+      border: .5px solid gainsboro;
+      box-shadow: 3px 0px 3px gainsboro;
+    }
+
+    p {
+      margin-top: 20px;
+    }
+
+    .inforLine {
+      color: goldenrod;
+      font-size: 20px;
+      margin: 20px;
+      font-weight: 800;
+    }
+
+    .teacherInfor {
+      font-size: 16px;
+      font-weight: 600;
+      color: rgb(0, 194, 157);
+    }
+
+    #mustWrite {
+      color: red;
+    }
+
+    ul li {
+      list-style: none;
+      font-size: 14px;
+      color: rgb(161, 161, 161);
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    li input {
+      width: 700px;
+      height: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 tittle">
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+        <span class="line">|</span>
+        <span class="tip">资料管理 > 编辑老师信息</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <p>
+          <span class="inforLine">|</span>
+          <span class="teacherInfor">老师基本信息</span>
+        </p>
+
+        <ul>
+          <li>
+            <span id="mustWrite">*</span>
+            老师名称：<input type="text" id="teacherName">0/24
+          </li>
+          <li>
+            <span id="mustWrite">*</span>
+            老师职称：<input type="text" id="job">0/24
+          </li>
+          <li>
+            <span id="mustWrite">*</span>
+            老师照片：
+            <input type="file" id="uploadImg">
+          </li>
+          <li>
+            <span id="mustWrite">*</span>
+            老师介绍：<textarea rows="6" cols="85" id="introduction"></textarea>0/100
+          </li>
+          <li>
+            <input type="button" value="提交" class="btn btn-default" style="width: 130px;" onclick="submit()">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    function submit() {
+      //获取文本
+      var teacherName = $('#teacherName').val()
+      var job = $('#job').val()
+      var introduction = $('#introduction').val()
+
+      // 获取文件
+      var files = $("#uploadImg")[0].files[0];
+
+      //把文本和文件都存入formData，再发送ajax上传
+      var formData = new FormData();
+      formData.append('file', files);
+      formData.append('teacherName', teacherName);
+      formData.append('job', job);
+      formData.append('introduction', introduction);
+      console.log(formData)
+      var ip = "http://192.168.0.111/kindergarten_wechat_war_exploded/"
+
+      $.ajax({
+        url: ip + 'teacher/manager/insert',
+        type: 'POST',
+        cache: false,
+        data: formData,
+        processData: false,
+        contentType: false,
+        mimeType: "multipart/form-data"
+      }).done(function (res) {
+        if (res == 1) {
+          console.log("新增成功");
+          window.location.href = 'teacherInformation.html'
+        }
+        if (res == -1) {
+          console.log("新增失败");
+        }
+        if (res == 2) {
+          console.log("图片已存在");
+        }
+
+      }).fail(function (res) {
+
+      });
+      return false;
+    }
+
+  </script>
+</body>
+
+</html>

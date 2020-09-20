@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/jquery3.5.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-evenly;
+            border-bottom: 1px solid #cccccc;
+            padding:20px 0
+        }
+        .s {
+            display: block;
+            width: 8px;
+            height: 26px;
+            background-color: #0099FF;
+            position: relative;
+            left: -20px;
+        }
+        .d1{
+            display:flex;
+            justify-content:space-between;
+            margin-bottom: 15px;
+        }
+        .d2{
+            margin-top:20px
+        }
+        .left{
+            display:block;
+            margin-left:20px
+        }
+        .right{
+            margin-right:20px
+        }
+        #title{
+            display:flex;
+            width:100%;
+            height: 60px;
+            background-color:#cccccc;
+        }
+        #back{
+            height: 20px;
+            align-self:center;
+            position: relative;
+            left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="title">
+        <h3 id="back" onclick="back()"><-</h3>
+        <h3 style="margin:auto;line-height:60px;position: relative;">预约详情</h3>
+    </div>
+    <header>
+        <div>
+            <h3>小朋友姓名</h3>
+            <p id="studentName"></p>
+        </div>
+        <div>
+            <h3>性别</h3>
+            <p id="sex"></p>
+        </div>
+        <div>
+            <h3>年龄</h3>
+            <p id="age"></p>
+        </div>
+    </header>
+    <article>
+        <div class="d2">
+            <div class="d1">
+                <div style="display:flex" class="left">
+                    <span class="s"></span>
+                    <h3>状态</h3>
+                </div>
+                <h3 class="right">已预约</h3>
+            </div>
+            <div class="d1">
+                <p class="left">单号</p>
+                <h4 id="appointment" class="right"></h4>
+            </div>
+            <div class="d1">
+                <p class="left">预约时间</p>
+                <h4 id="createTime" class="right"></h4>
+            </div>
+            <div class="d1">
+                <p class="left">选择班级</p>
+                <h4 id="classId" class="right"></h4>
+            </div>
+        </div>
+        <div class="d2">
+            <div class="d1">
+                <div style="display:flex" class="left">
+                    <span class="s"></span>
+                    <h3>父亲信息</h3>
+                </div>
+            </div>
+            <div class="d1">
+                <p class="left">父亲姓名</p>
+                <h4 id="fatherName" class="right"></h4>
+            </div>
+            <div class="d1">
+                <p class="left">身份证号</p>
+                <h4 id="fatherIdcard" class="right"></h4>
+            </div>
+        </div>
+        <div class="d2">
+            <div class="d1">
+                <div style="display:flex" class="left">
+                    <span class="s"></span>
+                    <h3>母亲信息</h3>
+                </div>
+            </div>
+            <div class="d1">
+                <p class="left">母亲姓名</p>
+                <h4 id="motherName" class="right"></h4>
+            </div>
+            <div class="d1">
+                <p class="left">身份证号</p>
+                <h4 id="motherIdcard" class="right"></h4>
+            </div>
+        </div>
+        <div class="d2">
+            <div class="d1">
+                <div style="display:flex" class="left">
+                    <span class="s"></span>
+                    <h3>小朋友地址信息</h3>
+                </div>
+            </div>
+            <div class="d1">
+                <p class="left" id="address"></p>
+            </div>
+        </div>
+    </article>
+    <script>
+        const list = {
+            "appointment": 202008192026108888,
+            "studentName": "刘自涵",
+            "age": 25,
+            "sex": 1,
+            telphone: "0571-88888888",
+            vxNum: "lzhsfw",
+            address: "地球",
+            classId: 1,
+            fatherName: "邹茂萍",
+            fatherIdcard: "110101199003075779",
+            motherName: '卡比',
+            motherIdcard: '333333333333333333',
+            status: 1,
+            createTime: "2020/08/19 20:29:10"
+        }
+        // const ip = 'http://192.168.0.118/kindergarten_wechat_war/'
+        // $.get(ip + '/cost/wechat/select',JSON.stringify({classId:localStorage.getItem('classId')}),function(data){
+        //     console.log(data);
+        // })
+        $('#studentName').html(list.studentName)
+        list.sex == 1 ? $('#sex').html('女') : $('#sex').html('男')
+        $('#age').html(list.age)
+        $('#appointment').html(list.appointment)
+        $('#createTime').html(list.createTime)
+        if(list.classId == 1){
+            $('#classId').html('小班')
+        }else if(list.classId == 2){
+            $('#classId').html('中班')
+        }else{
+            $('#classId').html('大班')
+        }
+        $('#fatherName').html(list.fatherName)
+        $('#fatherIdcard').html(list.fatherIdcard)
+        $('#motherName').html(list.motherName)
+        $('#motherIdcard').html(list.motherIdcard)
+        $('#address').html(list.address)
+        function back() {
+            window.location = './homepage.html'
+        }
+    </script>
+</body>
+
+</html>

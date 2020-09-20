@@ -1,0 +1,18 @@
+[
+  {
+    "teacherId": 1,
+    "teacherName": "刘自涵",
+    "job": "体育老师",
+    "likeNum": 250,
+    "introduction": "是个好人",
+    "imgSrc": "../images/a.jpg"
+  },
+  {
+    "teacherId": 2,
+    "teacherName": "刘自涵2",
+    "job": "体育老师",
+    "likeNum": 100,
+    "introduction": "应该是个好人",
+    "imgSrc": "../images/b.jpg"
+  }
+]

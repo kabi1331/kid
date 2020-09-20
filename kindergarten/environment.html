@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery3.5.js"></script>
+
+
+
+  <style>
+    .glyphicon-refresh {
+      font-size: 25px;
+      color: rgb(29, 208, 194);
+    }
+
+    .line {
+      color: rgb(0, 235, 234);
+      font-size: 25px;
+      margin-left: 20px;
+      font-weight: 800;
+    }
+
+    .tittle {
+      height: 60px;
+      background-color: rgb(242, 242, 242);
+      border-radius: 5px;
+      line-height: 60px;
+      box-shadow: 5px 0px 5px gainsboro;
+    }
+
+    .tip {
+      margin-left: 10px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .col-md-10 {
+      height: 80px;
+      margin-top: 30px;
+      border-radius: 5px;
+      border: .5px solid gainsboro;
+      box-shadow: 3px 0px 3px gainsboro;
+      display:flex;
+      align-items: center;
+    }
+
+    p {
+      margin-top: 20px;
+    }
+
+    .inforLine {
+      color: goldenrod;
+      font-size: 20px;
+      margin: 20px;
+      font-weight: 800;
+    }
+
+    .teacherInfor {
+      font-size: 16px;
+      font-weight: 600;
+      color: rgb(0, 194, 157);
+    }
+
+    #mustWrite {
+      color: red;
+    }
+
+    ul li {
+      list-style: none;
+      font-size: 14px;
+      color: rgb(161, 161, 161);
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    li input {
+      width: 700px;
+      height: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 tittle">
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+        <span class="line">|</span>
+        <span class="tip">优质环境</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <input type="button" value="添加" class="btn btn-default" style="width: 130px;background-color: #18BC9B;color:white;" onclick="addDiv()" aria-label="Left Align">
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" id="add">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1" style="height: 200px;display:block">
+        <input type="text" placeholder="请填写排序值" id="updown" style="margin-top: 30px;">
+        <input type="file" id="uploadImg" style="margin-top: 30px;">
+        <input type="button" value="提交" class="btn btn-default" style="width: 130px;background-color: #18BC9B;color:white;margin-top:30px" onclick="submit()">
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <script>
+    $('#add').hide()
+    function addDiv() {
+      $('#add').show()
+    }
+    function submit() {
+
+      // 获取文件
+      var files = $("#uploadImg")[0].files[0];
+      let updown = $('#updown').val()  
+      //把文本和文件都存入formData，再发送ajax上传
+      var formData = new FormData();
+      formData.append('file', files);
+      formData.append('number',updown)
+      var ip = "http://192.168.0.111/kindergarten_wechat_war_exploded/"
+
+      $.ajax({
+        url: ip + 'environment/manager/upload',
+        type: 'POST',
+        cache: false,
+        data: formData,
+        processData: false,
+        contentType: false,
+        mimeType: "multipart/form-data"
+      }).done(function (res) {
+        if (res == 1) {
+          alert('新增成功')
+        }
+        if (res == -1) {
+          alert('新增失败')
+        }
+        if(res == 2){
+          alert('图片已存在')
+        }
+
+      }).fail(function (res) {
+
+      });
+      return false;
+    }
+
+  </script>
+</body>
+
+</html>

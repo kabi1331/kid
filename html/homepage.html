@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/homepage.css">
+    <script src="../js/jquery3.5.js"></script>
+</head>
+
+<body>
+    <img src="" class="img">
+    <img src="../幼儿园/images/主要页面/u203.png" id="imgs">
+    <ul id="u1">
+        <button class="b1" style="background-color:#EB7C3C" id="b1">优质环境</button>
+        <button class="b1" style="background-color:#81BB5B" id="b2">专业师资</button>
+        <button class="b1" style="background-color:#EDC54A" id="b3">营养膳食</button>
+        <button class="b1" style="background-color:#6079AE" id="b4">特色教学</button>
+    </ul>
+    <div id="d1">
+
+    </div>
+    <div id="d2">
+
+    </div>
+    <div id="d3">
+        
+    </div>
+    <div id="d4">
+
+    </div>
+    <div id="but">
+        预约报名
+    </div>
+    <div id="go">
+        <button onclick="notapply()">未报名</button>
+        <button onclick="apply()">已报名</button>
+    </div>
+    <script>
+        const ip = 'http://192.168.0.118/kindergarten_wechat_war/'
+        $('#go').hide()
+        $.get(ip + '/rotation/wechat/select', function (data) {
+            let i = 0
+            setInterval(() => {
+                $('.img').attr('src', ip + data[i].imgSrc)
+                i++
+                if (i == data.length) {
+                    i = 0
+                }
+            }, 3000);
+        })
+        $.get(ip + '/environment/wechat/select', function (data) {
+            console.log(data);
+            for (let i = 0; i < data.length; i++) {
+                $('#d1').append(`<ul id='ul_d1'><li><img src='' id='i${i}'></li><li>${data[i].description}</li></ul>`)
+                $(`#i${i}`).attr('src',ip + data[i].imgSrc)
+            }
+            $('#b1').click(function () {
+                $('#d2').hide()
+                $('#d3').hide()
+                $('#d4').hide()
+                $('#d1').show()
+            })
+        })
+        $.get(ip + '/teacher/wechat/selectAll', function (data) {
+            console.log(data);
+            for(let i = 0;i<data.length;i++) {
+                $('#d2').append(`<div class='d2_d'><img src='' id='a${i}' width='100' height='100'><ul><li>${data[i].teacherName}</li><li>${data[i].introduction}</li><li>${data[i].job}</li></ul></div>`)
+                $(`#a${i}`).attr('src',ip + data[i].imgSrc)
+            }
+            $('#d2').hide()
+            $('#b2').click(function () {
+                $('#d1').hide()
+                $('#d3').hide()
+                $('#d4').hide()
+                $('#d2').show()
+            })
+        })
+        $.get(ip + '/dietary/wechat/select', function (data) {
+            console.log(data);
+            for (let i = 0; i < data.length; i++) {
+                $('#d3').append(`<img src='' id='c${i}'>`)
+                $(`#c${i}`).attr('src',ip + data[i].imgSrc)
+            }
+            $('#d3').hide()
+            $('#b3').click(function () {
+                $('#d1').hide()
+                $('#d2').hide()
+                $('#d4').hide()
+                $('#d3').show()
+            })
+        })
+        $.get(ip + '/special/wechat/select', function (data) {
+            console.log(data);
+            for (let i = 0; i < data.length; i++) {
+                $('#d4').append(`<img src='' id='e${i}'>`)
+                $(`#e${i}`).attr('src',ip + data[i].imgSrc)
+            }
+            $('#d4').hide()
+            $('#b4').click(function () {
+                $('#d2').hide()
+                $('#d3').hide()
+                $('#d1').hide()
+                $('#d4').show()
+            })
+        })
+        $('#but').click(function () {
+            $('#go').show()
+        })
+        notapply = () => {
+            window.location.href = './notapply.html'
+        }
+        apply = () => {
+            window.location.href = './apply.html'
+        }
+    </script>
+</body>
+
+</html>
